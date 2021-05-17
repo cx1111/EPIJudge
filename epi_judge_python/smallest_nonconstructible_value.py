@@ -11,6 +11,16 @@ def seek_next_ind(nums, i):
 
 
 def smallest_nonconstructible_value(A: List[int]) -> int:
+    """
+    Approach:
+    - Sort the array
+    - If no 1, return 1.
+    - In increasing order, construct cumulative sums using prev cumsum and
+      sum of count(num[i]) * i.
+    - If at any point the next number - previous cumsum > 1, it means theres a gap
+      that can't be constructed.
+    - Otherwise return cumsum + 1
+    """
     A.sort()
     if A[0] != 1:
         return 1

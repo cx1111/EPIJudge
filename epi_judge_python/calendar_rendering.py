@@ -11,6 +11,10 @@ Event = collections.namedtuple('Event', ('start', 'finish'))
 
 def find_max_simultaneous_events(A: List[Event]) -> int:
     """
+    Approach:
+    - Events should be flattened into start + end objects. Sort them all together.
+    - When encountering a new start event, num_open += 1.
+    - When encountering a new end event, num_open -= 1
     COMPLETE!!!
     """
     # Decompose each event into two objects: (starttime, start_type=0), (endtime, end_type=1)
@@ -29,9 +33,7 @@ def find_max_simultaneous_events(A: List[Event]) -> int:
     max_simul = 0
     n_open_events = 0
 
-    # print(flattened_events)
     for event in flattened_events:
-        # print('\nAt', event[0])
         # Actually don't even need the times anymore.
         if event[1] == 0:
             # print('here')
