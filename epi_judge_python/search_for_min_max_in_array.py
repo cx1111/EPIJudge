@@ -8,8 +8,34 @@ MinMax = collections.namedtuple('MinMax', ('smallest', 'largest'))
 
 
 def find_min_max(A: List[int]) -> MinMax:
-    # TODO - you fill in here.
-    return MinMax(0, 0)
+    """
+    Find min and max of a list with fewer than 2n-1 comparisons.
+    Basic method is iterate along and compute running min/max.
+
+    Can do better by comparing pairs with each other, then only
+    comparing larger one with max, and smaller one with min.
+    """
+    if len(A) == 1:
+        return MinMax(A[0], A[0])
+    elif len(A) == 2:
+        return MinMax(A[0], A[1]) if A[1] > A[0] else MinMax(A[1], A[0])
+
+    rmin, rmax = (A[0], A[1]) if A[1] > A[0] else (A[1], A[0])
+
+    for i in range(2, len(A), 2):
+        # Final odd numbered element
+        if i + 1 > len(A) - 1:
+            rmin = min(rmin, A[-1])
+            rmax = max(rmax, A[-1])
+        else:
+            if A[i] > A[i+1]:
+                rmax = max(A[i], rmax)
+                rmin = min(A[i+1], rmin)
+            else:
+                rmax = max(A[i+1], rmax)
+                rmin = min(A[i], rmin)
+    # breakpoint()
+    return MinMax(rmin, rmax)
 
 
 def res_printer(prop, value):
